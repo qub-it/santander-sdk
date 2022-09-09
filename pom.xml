@@ -1,131 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.fenixedu</groupId>
-        <artifactId>fenix-framework-project</artifactId>
-        <version>2.5.2</version>
-        <relativePath />
-    </parent>
+	<parent>
+		<groupId>com.qubit.solution.fenixedu.build</groupId>
+		<artifactId>qub-fenixedu-project</artifactId>
+		<version>1.2.1</version>
+		<relativePath />
+	</parent>
 
-    <artifactId>santander-sdk</artifactId>
-    <version>DEV-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<groupId>com.qubit.solution.fenixedu</groupId>
+	<artifactId>santander-sdk</artifactId>
+	<version>0.0.0</version>
+	<packaging>jar</packaging>
+	<name>Santander SDK</name>
 
-    <name>Santander SDK</name>
+	<properties>
+		<version.org.fenixedu.bennu>6.2.2-FORK</version.org.fenixedu.bennu>
+		<version.org.apache.cxf>3.3.0</version.org.apache.cxf>
+		<version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
+	</properties>
 
-    <properties>
-        <version.org.fenixedu.bennu>6.5.0</version.org.fenixedu.bennu>
-        <version.org.apache.cxf>3.1.10</version.org.apache.cxf>
-        <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
-    </properties>
-         
-    <issueManagement>
-        <system>JIRA</system>
-        <url>https://jira.fenixedu.org/browse/STDSDK</url>
-    </issueManagement>
+	<!-- <licenses> -->
+	<!-- <license> -->
+	<!-- <name>GNU Lesser General Public License v3.0</name> -->
+	<!-- <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url> -->
+	<!-- <distribution>repo</distribution> -->
+	<!-- </license> -->
+	<!-- </licenses> -->
 
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License v3.0</name>
-            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<!-- <scm> -->
+	<!-- <connection>scm:git:git@github.com:ist-dsi/santander-sdk.git</connection> -->
+	<!-- <developerConnection>scm:git:git@github.com:ist-dsi/santander-sdk.git</developerConnection> -->
+	<!-- <url>http://fenixedu.org</url> -->
+	<!-- <tag>HEAD</tag> -->
+	<!-- </scm> -->
 
-    <scm>
-        <connection>scm:git:git@github.com:ist-dsi/santander-sdk.git</connection>
-        <developerConnection>scm:git:git@github.com:ist-dsi/santander-sdk.git</developerConnection>
-        <url>http://fenixedu.org</url>
-        <tag>HEAD</tag>
-    </scm>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>initialize</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<property name="basedir" refid="maven.project" />
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-codegen-plugin</artifactId>
-                <version>${version.org.apache.cxf}</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <sourceRoot>${project.build.directory}/generated-sources/cxf-codegen-plugin</sourceRoot>
-                            <wsdlOptions>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/TUIDetailService.wsdl</wsdl>
-                                    <extraargs>
-                                        <extraarg>-client</extraarg>
-                                        <extraarg>-verbose</extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>http://portal.sibscartoes.pt/wcf=pt.sibscartoes.portal.wcf.tui</extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts=pt.sibscartoes.portal.wcf.tui.dto</extraarg>
-                                        <extraarg>-validate</extraarg>
-                                    </extraargs>
-                                </wsdlOption>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/RegisterInfoService.wsdl</wsdl>
-                                    <extraargs>
-                                        <extraarg>-client</extraarg>
-                                        <extraarg>-verbose</extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>http://portal.sibscartoes.pt/wcf=pt.sibscartoes.portal.wcf.register.info</extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts=pt.sibscartoes.portal.wcf.register.info.dto</extraarg>
-                                        <extraarg>-validate</extraarg>
-                                    </extraargs>
-                                </wsdlOption>
-                            </wsdlOptions>
-                        </configuration>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+								<echo
+									message="ANTRUN: copy resources and convert to UTF-8 to webapp/WEB-INF/resources" />
 
-    <dependencies>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-core</artifactId>
-            <version>${version.org.fenixedu.bennu}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fenixedu</groupId>
-            <artifactId>bennu-spring</artifactId>
-            <version>${version.org.fenixedu.bennu}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${version.org.apache.cxf}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${version.org.apache.cxf}</version>
-        </dependency>
-       <dependency>
-            <groupId>org.imgscalr</groupId>
-            <artifactId>imgscalr-lib</artifactId>
-            <version>${version.org.imgscalr.imgscalr-lib}</version>
-        </dependency>
-    </dependencies>
+								<copy
+									todir="${basedir}/target/classes/META-INF/resources/WEB-INF/resources/"
+									encoding="ISO-8859-15" outputencoding="UTF-8" overwrite="true">
+									<fileset dir="${basedir}/src/main/resources/resources/" />
+								</copy>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-    <repositories>
-        <repository>
-            <id>fenixedu-maven-repository</id>
-            <url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
-        </repository>
-    </repositories>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${version.org.apache.cxf}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${project.build.directory}/generated-sources/cxf-codegen-plugin</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/TUIDetailService.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-client</extraarg>
+										<extraarg>-verbose</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>http://portal.sibscartoes.pt/wcf=pt.sibscartoes.portal.wcf.tui</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts=pt.sibscartoes.portal.wcf.tui.dto</extraarg>
+										<extraarg>-validate</extraarg>
+									</extraargs>
+								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/RegisterInfoService.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-client</extraarg>
+										<extraarg>-verbose</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>http://portal.sibscartoes.pt/wcf=pt.sibscartoes.portal.wcf.register.info</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts=pt.sibscartoes.portal.wcf.register.info.dto</extraarg>
+										<extraarg>-validate</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.sun.xml.ws</groupId>
+				<artifactId>jaxws-ri</artifactId>
+				<version>2.3.0</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.ws</groupId>
+				<artifactId>jaxws-rt</artifactId>
+				<version>2.3.1</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-core</artifactId>
+			<version>${version.org.fenixedu.bennu}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-spring</artifactId>
+			<version>${version.org.fenixedu.bennu}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-scheduler</artifactId>
+			<version>${version.org.fenixedu.bennu}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-portal</artifactId>
+			<version>${version.org.fenixedu.bennu}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>bennu-io</artifactId>
+			<version>${version.org.fenixedu.bennu}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.qubit.solution.fenixedu</groupId>
+			<artifactId>bennu-webservices-core</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${version.org.apache.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${version.org.apache.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${version.org.imgscalr.imgscalr-lib}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.ws</groupId>
+			<artifactId>jaxws-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>ulisboa-repo</id>
+			<url>https://nexjen.ulisboa.pt/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>fenixedu-maven-repository</id>
+			<url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>ulisboa-repo</id>
+			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>ulisboa-repo</id>
+			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
