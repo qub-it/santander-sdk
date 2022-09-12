@@ -1,11 +1,10 @@
 package org.fenixedu.santandersdk.dto;
 
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.RegisterData;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import com.google.common.base.Strings;
-
-import pt.sibscartoes.portal.wcf.register.info.dto.RegisterData;
 
 public class GetRegisterResponse {
     private GetRegisterStatus status;

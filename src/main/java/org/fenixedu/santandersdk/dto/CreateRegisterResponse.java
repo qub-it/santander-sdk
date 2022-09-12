@@ -1,6 +1,6 @@
 package org.fenixedu.santandersdk.dto;
 
-import pt.sibscartoes.portal.wcf.tui.dto.TUIResponseData;
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.TUIResponseData;
 
 public class CreateRegisterResponse {
 
@@ -31,8 +31,8 @@ public class CreateRegisterResponse {
     }
 
     public CreateRegisterResponse(final TUIResponseData response) {
-        final String status = response.getStatus() == null || response.getStatus().getValue() == null
-                        ? "" : response.getStatus().getValue().trim();
+        final String status = response.getStatus() == null || response.getStatus().getValue() == null ? "" : response.getStatus()
+                .getValue().trim();
         final ErrorType errorType = !status.isEmpty() && !status.equalsIgnoreCase("error") ? null : ErrorType.REQUEST_REFUSED;
 
         setErrorType(errorType);

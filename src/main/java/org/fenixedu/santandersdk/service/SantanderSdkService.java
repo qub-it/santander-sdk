@@ -4,32 +4,28 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 import javax.xml.ws.WebServiceException;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
-import org.apache.cxf.ws.addressing.WSAddressingFeature;
-import org.fenixedu.bennu.SantanderSdkSpringConfiguration;
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.RegisterData;
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.TUIResponseData;
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.TuiPhotoRegisterData;
+import org.datacontract.schemas._2004._07.sibscards_wcf_services.TuiSignatureRegisterData;
 import org.fenixedu.santandersdk.dto.CardPreviewBean;
 import org.fenixedu.santandersdk.dto.CreateRegisterRequest;
 import org.fenixedu.santandersdk.dto.CreateRegisterResponse;
 import org.fenixedu.santandersdk.dto.CreateRegisterResponse.ErrorType;
 import org.fenixedu.santandersdk.dto.GetRegisterResponse;
 import org.fenixedu.santandersdk.exception.SantanderValidationException;
+import org.fenixedu.santandersdk.services.RegisterInfoWebServiceClient;
+import org.fenixedu.santandersdk.services.TuiWebserviceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pt.sibscartoes.portal.wcf.register.info.IRegisterInfoService;
-import pt.sibscartoes.portal.wcf.register.info.dto.RegisterData;
-import pt.sibscartoes.portal.wcf.tui.ITUIDetailService;
-import pt.sibscartoes.portal.wcf.tui.dto.TUIResponseData;
-import pt.sibscartoes.portal.wcf.tui.dto.TuiPhotoRegisterData;
-import pt.sibscartoes.portal.wcf.tui.dto.TuiSignatureRegisterData;
+import com.qubit.solution.fenixedu.bennu.webservices.domain.webservice.WebServiceClientConfiguration;
+import com.qubit.solution.fenixedu.bennu.webservices.domain.webservice.WebServiceConfiguration;
+
+import pt.sibscartoes.portal.wcf.IRegisterInfoService;
+import pt.sibscartoes.portal.wcf.ITUIDetailService;
 
 @Service
 public class SantanderSdkService {
@@ -50,7 +46,11 @@ public class SantanderSdkService {
     private final static int RECEIVE_TIMEOUT = 100000;
 
     public GetRegisterResponse getRegister(final String userName) {
-        final IRegisterInfoService port = initPort(IRegisterInfoService.class, "RegisterInfoService");
+        WebServiceClientConfiguration webServiceConfiguration = (WebServiceClientConfiguration) WebServiceConfiguration
+                .readByImplementationClass(RegisterInfoWebServiceClient.class.getName());
+
+        RegisterInfoWebServiceClient client = webServiceConfiguration.getClient();
+        final IRegisterInfoService port = client.getRegisterService();
         final RegisterData registerData = port.getRegister(userName);
         return new GetRegisterResponse(registerData);
     }
@@ -64,15 +64,20 @@ public class SantanderSdkService {
         final TuiPhotoRegisterData photoRegisterData = createPhoto(cardPreviewBean.getPhoto());
         final TuiSignatureRegisterData signature = new TuiSignatureRegisterData();
 
-        final ITUIDetailService port = initPort(ITUIDetailService.class, "TUIDetailService");
+        WebServiceClientConfiguration webServiceConfiguration = (WebServiceClientConfiguration) WebServiceConfiguration
+                .readByImplementationClass(TuiWebserviceClient.class.getName());
+
+        TuiWebserviceClient client = webServiceConfiguration.getClient();
+
+        final ITUIDetailService port = client.getTuiDetailService();
 
         try {
             final TUIResponseData responseData = port.saveRegister(tuiEntry, photoRegisterData, signature);
             return new CreateRegisterResponse(responseData);
         } catch (final WebServiceException e) {
-            LOGGER.error(String.format("An webservice error happened while trying to create santander register. -> %s", e.getMessage()), e);
-            return new CreateRegisterResponse(ErrorType.SANTANDER_COMMUNICATION, "santander communication error",
-                    e.getMessage());
+            LOGGER.error(String.format("An webservice error happened while trying to create santander register. -> %s",
+                    e.getMessage()), e);
+            return new CreateRegisterResponse(ErrorType.SANTANDER_COMMUNICATION, "santander communication error", e.getMessage());
         }
     }
 
@@ -93,35 +98,35 @@ public class SantanderSdkService {
         return photo;
     }
 
-    private <T> T initPort(final Class<T> serviceType, final String endpoint) {
-        final JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-        factory.setServiceClass(serviceType);
-        factory.setAddress(
-                String.format(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceAddress() + "/%s.svc", endpoint));
-        factory.setBindingId("http://schemas.xmlsoap.org/wsdl/soap12/");
-        factory.getFeatures().add(new WSAddressingFeature());
-
-        // Add loggers to request
-        factory.getInInterceptors().add(new LoggingInInterceptor());
-        factory.getOutInterceptors().add(new LoggingOutInterceptor());
-        final T port = (T) factory.create();
-
-        // Define WSDL policy
-        final Client client = ClientProxy.getClient(port);
-        final HTTPConduit http = (HTTPConduit) client.getConduit();
-        final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-
-        httpClientPolicy.setConnectionTimeout(CONNECTION_TIMEOUT); //Time in milliseconds
-        httpClientPolicy.setReceiveTimeout(RECEIVE_TIMEOUT); //Time in milliseconds
-        http.setClient(httpClientPolicy);
-
-        //Add username and password properties
-        http.getAuthorization().setUserName(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceUsername());
-        http.getAuthorization().setPassword(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServicePassword());
-
-        /*((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", CONNECTION_TIMEOUT);
-        ((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", REQUEST_TIMEOUT);*/
-
-        return port;
-    }
+//    private <T> T initPort(final Class<T> serviceType, final String endpoint) {
+//        final JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
+//        factory.setServiceClass(serviceType);
+//        factory.setAddress(
+//                String.format(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceAddress() + "/%s.svc", endpoint));
+//        factory.setBindingId("http://schemas.xmlsoap.org/wsdl/soap12/");
+//        factory.getFeatures().add(new WSAddressingFeature());
+//
+//        // Add loggers to request
+//        factory.getInInterceptors().add(new LoggingInInterceptor());
+//        factory.getOutInterceptors().add(new LoggingOutInterceptor());
+//        final T port = (T) factory.create();
+//
+//        // Define WSDL policy
+//        final Client client = ClientProxy.getClient(port);
+//        final HTTPConduit http = (HTTPConduit) client.getConduit();
+//        final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+//
+//        httpClientPolicy.setConnectionTimeout(CONNECTION_TIMEOUT); //Time in milliseconds
+//        httpClientPolicy.setReceiveTimeout(RECEIVE_TIMEOUT); //Time in milliseconds
+//        http.setClient(httpClientPolicy);
+//
+//        //Add username and password properties
+//        http.getAuthorization().setUserName(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceUsername());
+//        http.getAuthorization().setPassword(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServicePassword());
+//
+//        /*((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", CONNECTION_TIMEOUT);
+//        ((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", REQUEST_TIMEOUT);*/
+//
+//        return port;
+//    }
 }
