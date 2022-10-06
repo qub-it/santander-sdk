@@ -95,7 +95,8 @@ public class SantanderLineGenerator {
 
         final String[] names = harvestNames(request.getFullName());
         final String cardName = normalizeCardName(request.getCardName()).toUpperCase();
-        final String encodedCardName = new String(cardName.getBytes(Charset.forName("Windows-1252")), Charset.forName("Windows-1252"));
+        final String encodedCardName =
+                new String(cardName.getBytes(Charset.forName("Windows-1252")), Charset.forName("Windows-1252"));
 
         final String name = names[0];
         final String surname = names[1];
@@ -126,7 +127,7 @@ public class SantanderLineGenerator {
 
         final String expireDate = now.toString("yyyy") + "/" + expireDate_dateTime.toString("yyyy");
 
-        final String backNumber = makeZeroPaddedNumber(Integer.parseInt(request.getUsername().substring(3)), 10);
+        final String backNumber = makeZeroPaddedNumber(Integer.parseInt(request.getUsername()), 10);
 
         if (backNumber == null) {
             throw new SantanderValidationException("santander.sdk.error.line.generation.user.invalid.username.size");
@@ -254,17 +255,17 @@ public class SantanderLineGenerator {
 
     private String getRoleCode(final String role) {
         switch (role) {
-            case "STUDENT":
-                return "01";
+        case "STUDENT":
+            return "01";
 
-            case "TEACHER":
-                return "02";
+        case "TEACHER":
+            return "02";
 
-            case "EMPLOYEE":
-                return "03";
+        case "EMPLOYEE":
+            return "03";
 
-            default:
-                return "99";
+        default:
+            return "99";
         }
     }
 
@@ -291,7 +292,8 @@ public class SantanderLineGenerator {
     }
 
     private String purgeString(final String name) {
-        if (!CharMatcher.javaLetter().or(CharMatcher.whitespace()).matchesAllOf(name)) {
+        if (!CharMatcher.forPredicate(Character::isLetter).or(CharMatcher.forPredicate(Character::isWhitespace))
+                .matchesAllOf(name)) {
             final char[] ca = new char[name.length()];
             int j = 0;
             for (int i = 0; i < name.length(); i++) {
@@ -307,18 +309,18 @@ public class SantanderLineGenerator {
 
     private String getRoleDescription(final String role) {
         switch (role) {
-            case "STUDENT":
-                return "Estudante/Student";
-            case "TEACHER":
-                return "Docente/Faculty";
-            case "EMPLOYEE":
-                return "Funcionario/Staff";
-            case "RESEARCHER":
-                return "Invest./Researcher";
-            case "GRANT_OWNER":
-                return "Bolseiro/Grant Owner";
-            default:
-                return "00";
+        case "STUDENT":
+            return "Estudante/Student";
+        case "TEACHER":
+            return "Docente/Faculty";
+        case "EMPLOYEE":
+            return "Funcionario/Staff";
+        case "RESEARCHER":
+            return "Invest./Researcher";
+        case "GRANT_OWNER":
+            return "Bolseiro/Grant Owner";
+        default:
+            return "00";
         }
     }
 

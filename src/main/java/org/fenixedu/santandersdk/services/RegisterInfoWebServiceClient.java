@@ -1,6 +1,7 @@
 package org.fenixedu.santandersdk.services;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.soap.AddressingFeature;
 
 import com.qubit.solution.fenixedu.bennu.webservices.services.client.BennuWebServiceClient;
 
@@ -15,7 +16,8 @@ public class RegisterInfoWebServiceClient extends BennuWebServiceClient<IRegiste
 
     @Override
     protected BindingProvider getService() {
-        return (BindingProvider) new RegisterInfoService().getRegisterInfoWsHttp();
+        AddressingFeature addressingFeature = new AddressingFeature(true, true);
+        return (BindingProvider) new RegisterInfoService().getRegisterInfoWsHttp(addressingFeature);
     }
 
 }

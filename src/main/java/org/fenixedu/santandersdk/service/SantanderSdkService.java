@@ -21,9 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qubit.solution.fenixedu.bennu.webservices.domain.webservice.WebServiceClientConfiguration;
-import com.qubit.solution.fenixedu.bennu.webservices.domain.webservice.WebServiceConfiguration;
-
 import pt.sibscartoes.portal.wcf.IRegisterInfoService;
 import pt.sibscartoes.portal.wcf.ITUIDetailService;
 
@@ -41,15 +38,8 @@ public class SantanderSdkService {
 
     private final static String NAMESPACE_URI = "http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts";
 
-    // TODO: This probably should be in configurations
-    private final static int CONNECTION_TIMEOUT = 50000;
-    private final static int RECEIVE_TIMEOUT = 100000;
-
     public GetRegisterResponse getRegister(final String userName) {
-        WebServiceClientConfiguration webServiceConfiguration = (WebServiceClientConfiguration) WebServiceConfiguration
-                .readByImplementationClass(RegisterInfoWebServiceClient.class.getName());
-
-        RegisterInfoWebServiceClient client = webServiceConfiguration.getClient();
+        RegisterInfoWebServiceClient client = new RegisterInfoWebServiceClient();
         final IRegisterInfoService port = client.getRegisterService();
         final RegisterData registerData = port.getRegister(userName);
         return new GetRegisterResponse(registerData);
@@ -64,10 +54,7 @@ public class SantanderSdkService {
         final TuiPhotoRegisterData photoRegisterData = createPhoto(cardPreviewBean.getPhoto());
         final TuiSignatureRegisterData signature = new TuiSignatureRegisterData();
 
-        WebServiceClientConfiguration webServiceConfiguration = (WebServiceClientConfiguration) WebServiceConfiguration
-                .readByImplementationClass(TuiWebserviceClient.class.getName());
-
-        TuiWebserviceClient client = webServiceConfiguration.getClient();
+        TuiWebserviceClient client = new TuiWebserviceClient();
 
         final ITUIDetailService port = client.getTuiDetailService();
 
@@ -97,36 +84,4 @@ public class SantanderSdkService {
 
         return photo;
     }
-
-//    private <T> T initPort(final Class<T> serviceType, final String endpoint) {
-//        final JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-//        factory.setServiceClass(serviceType);
-//        factory.setAddress(
-//                String.format(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceAddress() + "/%s.svc", endpoint));
-//        factory.setBindingId("http://schemas.xmlsoap.org/wsdl/soap12/");
-//        factory.getFeatures().add(new WSAddressingFeature());
-//
-//        // Add loggers to request
-//        factory.getInInterceptors().add(new LoggingInInterceptor());
-//        factory.getOutInterceptors().add(new LoggingOutInterceptor());
-//        final T port = (T) factory.create();
-//
-//        // Define WSDL policy
-//        final Client client = ClientProxy.getClient(port);
-//        final HTTPConduit http = (HTTPConduit) client.getConduit();
-//        final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-//
-//        httpClientPolicy.setConnectionTimeout(CONNECTION_TIMEOUT); //Time in milliseconds
-//        httpClientPolicy.setReceiveTimeout(RECEIVE_TIMEOUT); //Time in milliseconds
-//        http.setClient(httpClientPolicy);
-//
-//        //Add username and password properties
-//        http.getAuthorization().setUserName(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServiceUsername());
-//        http.getAuthorization().setPassword(SantanderSdkSpringConfiguration.getConfiguration().sibsWebServicePassword());
-//
-//        /*((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", CONNECTION_TIMEOUT);
-//        ((BindingProvider)port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", REQUEST_TIMEOUT);*/
-//
-//        return port;
-//    }
 }

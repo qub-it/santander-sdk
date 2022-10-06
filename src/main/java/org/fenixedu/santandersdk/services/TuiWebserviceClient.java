@@ -1,6 +1,7 @@
 package org.fenixedu.santandersdk.services;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.soap.AddressingFeature;
 
 import com.qubit.solution.fenixedu.bennu.webservices.services.client.BennuWebServiceClient;
 
@@ -15,7 +16,8 @@ public class TuiWebserviceClient extends BennuWebServiceClient<ITUIDetailService
 
     @Override
     protected BindingProvider getService() {
-        return (BindingProvider) new TUIDetailService().getTUIDetailWsHttp();
+        AddressingFeature addressingFeature = new AddressingFeature(true, true);
+        return (BindingProvider) new TUIDetailService().getTUIDetailWsHttp(addressingFeature);
     }
 
 }

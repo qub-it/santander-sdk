@@ -15,10 +15,10 @@ public class CreateRegisterRequest {
     private String cardName;
     private String fullName;
     private String role;
-    private String campus;
-    private String departmentAcronym;
+    private String campus; // Not in use
+    private String departmentAcronym; // Not in use
     private byte[] photo;
-    private RegisterAction action;
+    private RegisterAction action; 
     private PickupAddress pickupAddress;
 
     public CreateRegisterRequest() {

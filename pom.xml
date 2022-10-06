@@ -78,7 +78,7 @@
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
-							<wsdlDirectory>src/main/wsdl</wsdlDirectory>
+							<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
 							<wsdlLocation>/wsdl/*</wsdlLocation>
 							<vmArgs>
 								<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
@@ -87,7 +87,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<wsdlDirectory>src/main/wsdl</wsdlDirectory>
+					<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
 					<wsdlLocation>/wsdl/*</wsdlLocation>
 					<vmArgs>
 						<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
