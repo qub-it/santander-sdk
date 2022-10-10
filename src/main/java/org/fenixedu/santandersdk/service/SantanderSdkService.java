@@ -63,18 +63,13 @@ public class SantanderSdkService {
     }
 
     private TuiPhotoRegisterData createPhoto(final byte[] photoContents) {
-        final QName FILE_NAME = new QName(NAMESPACE_URI, "FileName");
-        final QName FILE_EXTENSION = new QName(NAMESPACE_URI, "Extension");
-        final QName FILE_CONTENTS = new QName(NAMESPACE_URI, "FileContents");
-        final QName FILE_SIZE = new QName(NAMESPACE_URI, "Size");
-
         final String EXTENSION = ".jpeg";
 
         final TuiPhotoRegisterData photo = new TuiPhotoRegisterData();
-        photo.setFileContents(new JAXBElement<>(FILE_CONTENTS, byte[].class, photoContents));
-        photo.setSize(new JAXBElement<>(FILE_SIZE, String.class, Integer.toString(photoContents.length)));
-        photo.setExtension(new JAXBElement<>(FILE_EXTENSION, String.class, EXTENSION));
-        photo.setFileName(new JAXBElement<>(FILE_NAME, String.class, "foto"));
+        photo.setFileContents(photoContents);
+        photo.setSize(Integer.toString(photoContents.length));
+        photo.setExtension(EXTENSION);
+        photo.setFileName("foto");
 
         return photo;
     }

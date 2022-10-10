@@ -14,10 +14,10 @@ public class GetRegisterResponse {
     private String serialNumber;
 
     public GetRegisterResponse(final RegisterData registerData) {
-        String status = registerData.getStatus().getValue();
+        String status = registerData.getStatus();
 
         if (status == null) {
-            status = registerData.getStatusDescription().getValue();
+            status = registerData.getStatusDescription();
         }
 
         this.status = GetRegisterStatus.fromString(status);
@@ -25,7 +25,7 @@ public class GetRegisterResponse {
         DateTime expiryDate = null;
 
         if (registerData.getExpiryDate() != null) {
-            final String expiryDateString = registerData.getExpiryDate().getValue();
+            final String expiryDateString = registerData.getExpiryDate();
 
             if (expiryDateString != null) {
                 expiryDate = DateTime.parse(expiryDateString, DateTimeFormat.forPattern("dd-MM-yyyy"));
@@ -37,7 +37,7 @@ public class GetRegisterResponse {
         DateTime expeditionDate = null;
 
         if (registerData.getExpeditionDate() != null) {
-            final String expeditionDateString = registerData.getExpeditionDate().getValue();
+            final String expeditionDateString = registerData.getExpeditionDate();
 
             if (expeditionDateString != null) {
                 expeditionDate = DateTime.parse(expeditionDateString, DateTimeFormat.forPattern("dd-MM-yyyy"));
@@ -47,10 +47,10 @@ public class GetRegisterResponse {
         this.expeditionDate = expeditionDate;
 
         this.mifare = registerData.getMifareNumber() == null || Strings
-                .isNullOrEmpty(registerData.getMifareNumber().getValue()) ? null : registerData.getMifareNumber().getValue();
+                .isNullOrEmpty(registerData.getMifareNumber()) ? null : registerData.getMifareNumber();
 
         this.serialNumber = registerData.getSerialNumber() == null || Strings
-                .isNullOrEmpty(registerData.getSerialNumber().getValue()) ? null : registerData.getSerialNumber().getValue();
+                .isNullOrEmpty(registerData.getSerialNumber()) ? null : registerData.getSerialNumber();
     }
 
     public GetRegisterResponse() {

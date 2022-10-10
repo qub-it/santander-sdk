@@ -31,18 +31,17 @@ public class CreateRegisterResponse {
     }
 
     public CreateRegisterResponse(final TUIResponseData response) {
-        final String status = response.getStatus() == null || response.getStatus().getValue() == null ? "" : response.getStatus()
-                .getValue().trim();
+        final String status = response.getStatus() == null || response.getStatus() == null ? "" : response.getStatus().trim();
         final ErrorType errorType = !status.isEmpty() && !status.equalsIgnoreCase("error") ? null : ErrorType.REQUEST_REFUSED;
 
         setErrorType(errorType);
 
         if (response.getTuiResponseLine() != null) {
-            setResponseLine(response.getTuiResponseLine().getValue());
+            setResponseLine(response.getTuiResponseLine());
         }
 
         if (errorType != null && response.getStatusDescription() != null) {
-            setErrorDescription(response.getStatusDescription().getValue());
+            setErrorDescription(response.getStatusDescription());
         }
     }
 
