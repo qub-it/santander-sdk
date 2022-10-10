@@ -14,26 +14,20 @@ import org.fenixedu.santandersdk.dto.CreateRegisterResponse;
 import org.fenixedu.santandersdk.dto.CreateRegisterResponse.ErrorType;
 import org.fenixedu.santandersdk.dto.GetRegisterResponse;
 import org.fenixedu.santandersdk.exception.SantanderValidationException;
-import org.fenixedu.santandersdk.services.RegisterInfoWebServiceClient;
-import org.fenixedu.santandersdk.services.TuiWebserviceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import pt.sibscartoes.portal.wcf.IRegisterInfoService;
 import pt.sibscartoes.portal.wcf.ITUIDetailService;
 
-@Service
 public class SantanderSdkService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SantanderSdkService.class);
 
-    private final SantanderLineGenerator santanderLineGenerator;
+    private SantanderLineGenerator santanderLineGenerator = new SantanderLineGenerator(new SantanderEntryValidator());;
 
-    @Autowired
-    public SantanderSdkService(final SantanderLineGenerator santanderLineGenerator) {
-        this.santanderLineGenerator = santanderLineGenerator;
+    public SantanderSdkService() {
+
     }
 
     private final static String NAMESPACE_URI = "http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts";

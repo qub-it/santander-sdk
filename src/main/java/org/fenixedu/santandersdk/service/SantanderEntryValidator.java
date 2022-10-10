@@ -5,13 +5,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.santandersdk.exception.SantanderValidationException;
-import org.springframework.stereotype.Service;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
 
-@Service
 public class SantanderEntryValidator {
 
     private static class SantanderFieldValidator {
@@ -38,7 +36,8 @@ public class SantanderEntryValidator {
             }
 
             if (s.length() > size) {
-                final String error = String.format("property %s (%s) has to many characters (max characters: %d)", fieldName, s, size);
+                final String error =
+                        String.format("property %s (%s) has to many characters (max characters: %d)", fieldName, s, size);
                 throw new SantanderValidationException(error);
             }
 
@@ -63,6 +62,9 @@ public class SantanderEntryValidator {
         public int getSize() {
             return size;
         }
+    }
+
+    public SantanderEntryValidator() {
     }
 
     private final List<SantanderFieldValidator> validators = new ArrayList<SantanderFieldValidator>() {
@@ -147,7 +149,7 @@ public class SantanderEntryValidator {
     }
 
     private String makeStringBlock(final String value, final SantanderFieldValidator validator)
-                                   throws SantanderValidationException {
+            throws SantanderValidationException {
         // Validate value.
         validator.validate(value);
 
@@ -176,4 +178,3 @@ public class SantanderEntryValidator {
         return line.substring(beginIndex, endIndex).trim();
     }
 }
-

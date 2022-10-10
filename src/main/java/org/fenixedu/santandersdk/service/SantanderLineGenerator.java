@@ -17,23 +17,20 @@ import org.fenixedu.santandersdk.exception.SantanderValidationException;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
 
-@Service
+
 public class SantanderLineGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SantanderLineGenerator.class);
     private final Map<String, String> charReplacementMap = new HashMap<>();
     private final CharsetEncoder latin1CharsetEncoder = StandardCharsets.ISO_8859_1.newEncoder();
 
-    private final SantanderEntryValidator santanderEntryValidator;
+    private SantanderEntryValidator santanderEntryValidator;
 
-    @Autowired
-    public SantanderLineGenerator(final SantanderEntryValidator santanderEntryValidator) {
+    public SantanderLineGenerator(SantanderEntryValidator santanderEntryValidator) {
         this.santanderEntryValidator = santanderEntryValidator;
         fillCharReplacementMap();
     }

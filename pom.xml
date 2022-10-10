@@ -13,7 +13,7 @@
 
 	<groupId>com.qubit.solution.fenixedu</groupId>
 	<artifactId>santander-sdk</artifactId>
-	<version>0.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Santander SDK</name>
 
@@ -124,11 +124,11 @@
 			<artifactId>bennu-core</artifactId>
 			<version>${version.org.fenixedu.bennu}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.fenixedu</groupId>
-			<artifactId>bennu-spring</artifactId>
-			<version>${version.org.fenixedu.bennu}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.fenixedu</groupId> -->
+<!-- 			<artifactId>bennu-spring</artifactId> -->
+<!-- 			<version>${version.org.fenixedu.bennu}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>

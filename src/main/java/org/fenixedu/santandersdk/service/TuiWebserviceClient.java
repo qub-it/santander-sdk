@@ -1,4 +1,4 @@
-package org.fenixedu.santandersdk.services;
+package org.fenixedu.santandersdk.service;
 
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.soap.AddressingFeature;
