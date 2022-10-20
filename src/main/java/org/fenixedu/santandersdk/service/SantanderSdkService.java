@@ -1,7 +1,5 @@
 package org.fenixedu.santandersdk.service;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import javax.xml.ws.WebServiceException;
 
 import org.datacontract.schemas._2004._07.sibscards_wcf_services.RegisterData;
@@ -24,13 +22,11 @@ public class SantanderSdkService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SantanderSdkService.class);
 
-    private SantanderLineGenerator santanderLineGenerator = new SantanderLineGenerator(new SantanderEntryValidator());;
+    private SantanderLineGenerator santanderLineGenerator;
 
     public SantanderSdkService() {
-
+        santanderLineGenerator = new SantanderLineGenerator(new SantanderEntryValidator());
     }
-
-    private final static String NAMESPACE_URI = "http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts";
 
     public GetRegisterResponse getRegister(final String userName) {
         RegisterInfoWebServiceClient client = new RegisterInfoWebServiceClient();
