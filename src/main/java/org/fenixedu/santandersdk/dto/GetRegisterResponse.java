@@ -46,11 +46,11 @@ public class GetRegisterResponse {
 
         this.expeditionDate = expeditionDate;
 
-        this.mifare = registerData.getMifareNumber() == null || Strings
-                .isNullOrEmpty(registerData.getMifareNumber()) ? null : registerData.getMifareNumber();
+        this.mifare = registerData.getMifareNumber() == null
+                || Strings.isNullOrEmpty(registerData.getMifareNumber()) ? null : registerData.getMifareNumber();
 
-        this.serialNumber = registerData.getSerialNumber() == null || Strings
-                .isNullOrEmpty(registerData.getSerialNumber()) ? null : registerData.getSerialNumber();
+        this.serialNumber = registerData.getSerialNumber() == null
+                || Strings.isNullOrEmpty(registerData.getSerialNumber()) ? null : registerData.getSerialNumber();
     }
 
     public GetRegisterResponse() {
