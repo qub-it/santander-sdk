@@ -22,21 +22,6 @@
 		<version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
 	</properties>
 
-	<!-- <licenses> -->
-	<!-- <license> -->
-	<!-- <name>GNU Lesser General Public License v3.0</name> -->
-	<!-- <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url> -->
-	<!-- <distribution>repo</distribution> -->
-	<!-- </license> -->
-	<!-- </licenses> -->
-
-	<!-- <scm> -->
-	<!-- <connection>scm:git:git@github.com:ist-dsi/santander-sdk.git</connection> -->
-	<!-- <developerConnection>scm:git:git@github.com:ist-dsi/santander-sdk.git</developerConnection> -->
-	<!-- <url>http://fenixedu.org</url> -->
-	<!-- <tag>HEAD</tag> -->
-	<!-- </scm> -->
-
 	<build>
 		<plugins>
 			<plugin>
@@ -125,11 +110,6 @@
 			<artifactId>bennu-core</artifactId>
 			<version>${version.org.fenixedu.bennu}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.fenixedu</groupId> -->
-<!-- 			<artifactId>bennu-spring</artifactId> -->
-<!-- 			<version>${version.org.fenixedu.bennu}</version> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>
