@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -36,12 +34,9 @@
 							<target>
 								<property name="basedir" refid="maven.project" />
 
-								<echo
-									message="ANTRUN: copy resources and convert to UTF-8 to webapp/WEB-INF/resources" />
+								<echo message="ANTRUN: copy resources and convert to UTF-8 to webapp/WEB-INF/resources" />
 
-								<copy
-									todir="${basedir}/target/classes/META-INF/resources/WEB-INF/resources/"
-									encoding="ISO-8859-15" outputencoding="UTF-8" overwrite="true">
+								<copy todir="${basedir}/target/classes/META-INF/resources/WEB-INF/resources/" encoding="ISO-8859-15" outputencoding="UTF-8" overwrite="true">
 									<fileset dir="${basedir}/src/main/resources/resources/" />
 								</copy>
 							</target>
@@ -64,20 +59,17 @@
 						</goals>
 						<configuration>
 							<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
+							<wsdlLocation>/wsdl/*</wsdlLocation>
 							<vmArgs>
 								<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
 							</vmArgs>
+							<extension>true</extension>
+							<!--
+							<bindingDirectory>src/main/resources/xjb</bindingDirectory>
+							-->
 						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
-					<vmArgs>
-						<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-					</vmArgs>
-					<extension>true</extension>
-					<bindingDirectory>src/main/resources/xjb</bindingDirectory>
-				</configuration>
 			</plugin>
 
 		</plugins>

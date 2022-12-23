@@ -41,7 +41,24 @@
 		</wsp:ExactlyOne>
 	</wsp:Policy>
 	<wsdl:types>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://portal.sibscartoes.pt/wcf">
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+		targetNamespace="http://portal.sibscartoes.pt/wcf" 
+		xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
+		
+		<!-- READ ME: Services -->
+			<!-- The following JAXB bindings will change the package to "registerInfoService" instead of "http://portal.sibscartoes.pt/wcf" in order to not collide -->
+			<!-- with other webservices that employ the same target namespace -->
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:globalBindings generateElementProperty="false" />
+					<jxb:bindings node="//xs:schema">
+						<jxb:schemaBindings>
+							<jxb:package name="tuiService" />
+						</jxb:schemaBindings>
+					</jxb:bindings>
+				</xs:appinfo>
+			</xs:annotation>
+
 			<xs:import namespace="http://schemas.datacontract.org/2004/07/SibsCards.Wcf.Services.DataContracts"/>
 			<xs:element name="SaveRegister">
 				<xs:complexType>

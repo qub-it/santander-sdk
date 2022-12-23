@@ -37,6 +37,7 @@ public class CreateRegisterResponse {
         setErrorType(errorType);
 
         if (response.getTuiResponseLine() != null) {
+
             setResponseLine(response.getTuiResponseLine());
         }
 

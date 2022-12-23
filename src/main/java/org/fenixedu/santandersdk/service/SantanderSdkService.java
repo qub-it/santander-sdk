@@ -63,7 +63,7 @@ public class SantanderSdkService {
 
         final TuiPhotoRegisterData photo = new TuiPhotoRegisterData();
         photo.setFileContents(photoContents);
-        photo.setSize(Integer.toString(photoContents.length));
+        photo.setSize(String.valueOf(photoContents.length));
         photo.setExtension(EXTENSION);
         photo.setFileName("foto");
 

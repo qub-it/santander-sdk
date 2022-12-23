@@ -14,7 +14,8 @@ public class GetRegisterResponse {
     private String serialNumber;
 
     public GetRegisterResponse(final RegisterData registerData) {
-        String status = registerData.getStatus();
+        String statusElement = registerData.getStatus();
+        String status = statusElement != null ? statusElement : null;
 
         if (status == null) {
             status = registerData.getStatusDescription();
