@@ -16,7 +16,7 @@
 	<name>Santander SDK</name>
 
 	<properties>
-		<version.org.fenixedu.bennu>6.2.2-FORK</version.org.fenixedu.bennu>
+		<version.org.fenixedu.bennu>6.3.0-FORK</version.org.fenixedu.bennu>
 		<version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
 	</properties>
 
@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>com.qubit.solution.fenixedu</groupId>
 			<artifactId>bennu-webservices-core</artifactId>
-			<version>2.1.0</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
