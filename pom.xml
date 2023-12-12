@@ -62,6 +62,7 @@
 							<vmArgs>
 								<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
 							</vmArgs>
+							<extension>true</extension>
 							<!--
 							<bindingDirectory>src/main/resources/xjb</bindingDirectory>
 							-->
