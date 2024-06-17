@@ -11,7 +11,7 @@
 
 	<groupId>com.qubit.solution.fenixedu</groupId>
 	<artifactId>santander-sdk</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<packaging>jar</packaging>
 	<name>Santander SDK</name>
 
@@ -79,7 +79,7 @@
 			<dependency>
 				<groupId>com.qubit.solution.fenixedu</groupId>
 				<artifactId>fenixedu-oss-dependency-management</artifactId>
-				<version>170</version>
+				<version>172</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
