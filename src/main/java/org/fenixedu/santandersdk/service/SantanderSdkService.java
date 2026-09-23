@@ -1,6 +1,6 @@
 package org.fenixedu.santandersdk.service;
 
-import javax.xml.ws.WebServiceException;
+import jakarta.xml.ws.WebServiceException;
 
 import org.datacontract.schemas._2004._07.sibscards_wcf_services.RegisterData;
 import org.datacontract.schemas._2004._07.sibscards_wcf_services.TUIResponseData;
