@@ -1,7 +1,7 @@
 package org.fenixedu.santandersdk.service;
 
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.soap.AddressingFeature;
+import jakarta.xml.ws.BindingProvider;
+import jakarta.xml.ws.soap.AddressingFeature;
 
 import com.qubit.solution.fenixedu.bennu.webservices.services.client.BennuWebServiceClient;
 
