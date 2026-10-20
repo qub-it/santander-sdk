@@ -11,7 +11,7 @@
 
 	<groupId>com.qubit.solution.fenixedu</groupId>
 	<artifactId>santander-sdk</artifactId>
-	<version>1.2.1</version>
+	<version>2.0.0</version>
 	<packaging>jar</packaging>
 	<name>Santander SDK</name>
 
